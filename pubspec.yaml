@@ -28,6 +28,7 @@ flutter:
     - assets/images/
     - assets/images/logo/
     - assets/translations/
+    - assets/fonts/
 
   fonts:
     - family: Orbitron

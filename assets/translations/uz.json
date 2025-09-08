@@ -6,7 +6,7 @@
   "russian": "Русский",
   "continue": "Davom etish",
   "console_codes": "Konsol kodlari",
-  "maps": "Xaritalar", 
+  "maps": "Xaritalar",
   "settings": "Sozlamalar",
   "pro_players": "Pro o'yinchilar",
   "tournaments": "Turnirlar",
@@ -15,5 +15,7 @@
   "change_language": "Tilni o'zgartirish",
   "welcome_back": "Xush kelibsiz!",
   "ready_to_dominate": "CS 1.6 da g'alaba qozonishga tayyormisiz?",
-  "close": "Yopish"
+  "close": "Yopish",
+  "home": "Asosiy",
+  "main_page": "Bosh sahifa"
 }

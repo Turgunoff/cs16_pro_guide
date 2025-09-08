@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
+import '../theme/app_theme.dart';
 import '../widgets/console_codes_content.dart';
 import '../widgets/home_content.dart';
 import '../widgets/maps_content.dart';
@@ -69,115 +70,172 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFF1A1A1A),
+      backgroundColor: AppColors.backgroundSecondary,
       child: Column(
         children: [
-          // Drawer Header
+          // Compact Header - 180px dan 160px ga
           Container(
-            height: 200,
+            height: 220,
             width: double.infinity,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFFFF6B35), Color(0xFF2C3E50)],
+                colors: AppColors.primaryGradient,
               ),
+              boxShadow: [AppTheme.subtleGlow],
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(15),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Compact logo
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteOpacity20,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.whiteOpacity30,
+                          width: 1,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.sports_esports,
+                        size: 28,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.sports_esports,
-                      size: 40,
-                      color: Colors.white,
+                    const SizedBox(height: 8),
+                    Text(
+                      'CS 1.6 PRO',
+                      style: AppTextStyles.displaySmall.copyWith(
+                        fontSize: 18,
+                        letterSpacing: 1.5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text('CS 1.6', style: AppTextStyles.cs16Title),
-                  Text('PRO GUIDE', style: AppTextStyles.cs16Subtitle),
-                ],
+                    Text(
+                      'GUIDE',
+                      style: AppTextStyles.cs16Subtitle.copyWith(
+                        fontSize: 10,
+                        letterSpacing: 2.0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
 
-          // Menu Items
+          // Compact Menu Items
           Expanded(
             child: ListView(
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.home,
-                  title: 'Asosiy sahifa',
-                  subtitle: 'Bosh sahifa',
+                  icon: Icons.home_rounded,
+                  title: 'Asosiy',
                   index: 0,
                 ),
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.terminal,
+                  icon: Icons.terminal_rounded,
                   title: 'console_codes'.tr(),
-                  subtitle: 'Cheat codes & commands',
                   index: 1,
                 ),
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.map,
+                  icon: Icons.map_rounded,
                   title: 'maps'.tr(),
-                  subtitle: 'Wallbangs & strategies',
                   index: 2,
                 ),
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.settings,
+                  icon: Icons.tune_rounded,
                   title: 'settings'.tr(),
-                  subtitle: 'Configs & crosshairs',
                   index: 3,
                 ),
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.people,
+                  icon: Icons.people_rounded,
                   title: 'pro_players'.tr(),
-                  subtitle: 'Legends & their setups',
                   index: 4,
                 ),
-                _buildDrawerItem(
+                _buildCompactDrawerItem(
                   context,
-                  icon: Icons.emoji_events,
+                  icon: Icons.emoji_events_rounded,
                   title: 'tournaments'.tr(),
-                  subtitle: 'Major championships',
                   index: 5,
                 ),
 
-                const Divider(color: Color(0xFF2C3E50), thickness: 1),
+                // Divider with style
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
+                  height: 1,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        AppColors.primaryOpacity30,
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
 
-                _buildActionItem(
+                // Compact Action Items
+                _buildCompactActionItem(
                   context,
-                  icon: Icons.info_outline,
+                  icon: Icons.info_outline_rounded,
                   title: 'about_app'.tr(),
-                  subtitle: 'Version & credits',
                   onTap: () => _showAboutDialog(context),
                 ),
-                _buildActionItem(
+                _buildCompactActionItem(
                   context,
-                  icon: Icons.star_border,
+                  icon: Icons.star_border_rounded,
                   title: 'rate_us'.tr(),
-                  subtitle: 'Support the app',
                   onTap: () => _showRateDialog(context),
                 ),
-                _buildActionItem(
+                _buildCompactActionItem(
                   context,
-                  icon: Icons.language,
+                  icon: Icons.language_rounded,
                   title: 'change_language'.tr(),
-                  subtitle: 'Switch language',
                   onTap: () => _showLanguageDialog(context),
+                ),
+              ],
+            ),
+          ),
+
+          // Bottom signature
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: AppColors.primaryOpacity20, width: 1),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.code_rounded,
+                  color: AppColors.primaryOpacity70,
+                  size: 16,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'v1.0.0',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: AppColors.textQuaternary,
+                    letterSpacing: 1.0,
+                  ),
                 ),
               ],
             ),
@@ -187,108 +245,97 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDrawerItem(
+  Widget _buildCompactDrawerItem(
     BuildContext context, {
     required IconData icon,
     required String title,
-    required String subtitle,
     required int index,
   }) {
     final isSelected = _selectedIndex == index;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       decoration: BoxDecoration(
-        color: isSelected
-            ? const Color(0xFFFF6B35).withOpacity(0.2)
-            : Colors.transparent,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
+        gradient: isSelected
+            ? LinearGradient(
+                colors: [
+                  AppColors.primaryOpacity20,
+                  AppColors.primaryOpacity10,
+                ],
+              )
+            : null,
+        border: isSelected
+            ? Border.all(color: AppColors.primaryOpacity30, width: 1)
+            : null,
       ),
       child: ListTile(
         leading: Container(
-          width: 40,
-          height: 40,
+          width: 36,
+          height: 36,
           decoration: BoxDecoration(
-            color: isSelected
-                ? const Color(0xFFFF6B35).withOpacity(0.3)
-                : const Color(0xFFFF6B35).withOpacity(0.1),
+            color: isSelected ? AppColors.primary : AppColors.primaryOpacity10,
             borderRadius: BorderRadius.circular(8),
+            boxShadow: isSelected ? [AppTheme.subtleGlow] : null,
           ),
           child: Icon(
             icon,
-            color: isSelected
-                ? const Color(0xFFFF6B35)
-                : const Color(0xFFFF6B35).withOpacity(0.7),
-            size: 20,
+            color: isSelected ? Colors.white : AppColors.primary,
+            size: 18,
           ),
         ),
         title: Text(
           title,
           style: AppTextStyles.menuItem.copyWith(
+            fontSize: 15,
             color: isSelected ? AppColors.textPrimary : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
           ),
         ),
-        subtitle: Text(
-          subtitle,
-          style: AppTextStyles.menuSubtitle.copyWith(
-            color: isSelected
-                ? AppColors.textSecondary
-                : AppColors.textTertiary,
-          ),
-        ),
         onTap: () {
-          // Drawer ni yopish
           Navigator.of(context).pop();
-
-          // Content o'zgartirish
           setState(() {
             _selectedIndex = index;
           });
         },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        dense: true,
       ),
     );
   }
 
-  Widget _buildActionItem(
+  Widget _buildCompactActionItem(
     BuildContext context, {
     required IconData icon,
     required String title,
-    required String subtitle,
     required VoidCallback onTap,
   }) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xFFFF6B35).withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 1),
+      child: ListTile(
+        leading: Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: AppColors.primaryOpacity10,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Icon(icon, color: AppColors.primaryOpacity70, size: 16),
         ),
-        child: Icon(
-          icon,
-          color: const Color(0xFFFF6B35).withOpacity(0.7),
-          size: 20,
+        title: Text(
+          title,
+          style: AppTextStyles.labelLarge.copyWith(
+            fontSize: 14,
+            color: AppColors.textTertiary,
+          ),
         ),
+        onTap: () {
+          Navigator.of(context).pop();
+          onTap();
+        },
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        dense: true,
       ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white70,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: const TextStyle(color: Colors.white54, fontSize: 12),
-      ),
-      onTap: () {
-        Navigator.of(context).pop(); // Faqat action lar uchun drawer ni yopamiz
-        onTap();
-      },
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     );
   }
 
