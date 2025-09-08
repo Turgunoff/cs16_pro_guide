@@ -7,7 +7,10 @@ class ProPlayersContent extends StatefulWidget {
   State<ProPlayersContent> createState() => _ProPlayersContentState();
 }
 
-class _ProPlayersContentState extends State<ProPlayersContent> {
+class _ProPlayersContentState extends State<ProPlayersContent>
+    with TickerProviderStateMixin {
+  AnimationController? _animationController;
+  Animation<double>? _fadeAnimation;
   final List<Map<String, dynamic>> _players = [
     {
       'name': 'f0rest',
@@ -69,22 +72,50 @@ class _ProPlayersContentState extends State<ProPlayersContent> {
   String _selectedCountry = 'Barchasi';
 
   @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
+    );
+    _animationController!.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_fadeAnimation == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFFFF6B35)),
+      );
+    }
+
     final filteredPlayers = _getFilteredPlayers();
 
-    return Column(
-      children: [
-        _buildSearchAndFilter(),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: filteredPlayers.length,
-            itemBuilder: (context, index) {
-              return _buildPlayerCard(filteredPlayers[index]);
-            },
+    return FadeTransition(
+      opacity: _fadeAnimation!,
+      child: Column(
+        children: [
+          _buildSearchAndFilter(),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: filteredPlayers.length,
+              itemBuilder: (context, index) {
+                return _buildPlayerCard(filteredPlayers[index]);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

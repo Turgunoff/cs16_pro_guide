@@ -7,7 +7,10 @@ class TournamentsContent extends StatefulWidget {
   State<TournamentsContent> createState() => _TournamentsContentState();
 }
 
-class _TournamentsContentState extends State<TournamentsContent> {
+class _TournamentsContentState extends State<TournamentsContent>
+    with TickerProviderStateMixin {
+  AnimationController? _animationController;
+  Animation<double>? _fadeAnimation;
   final List<Map<String, dynamic>> _tournaments = [
     {
       'name': 'CPL World Tour 2005',
@@ -81,22 +84,50 @@ class _TournamentsContentState extends State<TournamentsContent> {
   String _searchQuery = '';
 
   @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
+    );
+    _animationController!.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_fadeAnimation == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFFFF6B35)),
+      );
+    }
+
     final filteredTournaments = _getFilteredTournaments();
 
-    return Column(
-      children: [
-        _buildSearchAndFilter(),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: filteredTournaments.length,
-            itemBuilder: (context, index) {
-              return _buildTournamentCard(filteredTournaments[index]);
-            },
+    return FadeTransition(
+      opacity: _fadeAnimation!,
+      child: Column(
+        children: [
+          _buildSearchAndFilter(),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: filteredTournaments.length,
+              itemBuilder: (context, index) {
+                return _buildTournamentCard(filteredTournaments[index]);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

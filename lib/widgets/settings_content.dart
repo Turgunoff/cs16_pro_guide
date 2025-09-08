@@ -7,35 +7,66 @@ class SettingsContent extends StatefulWidget {
   State<SettingsContent> createState() => _SettingsContentState();
 }
 
-class _SettingsContentState extends State<SettingsContent> {
+class _SettingsContentState extends State<SettingsContent>
+    with TickerProviderStateMixin {
+  AnimationController? _animationController;
+  Animation<double>? _fadeAnimation;
   bool _isDarkTheme = true;
   bool _notificationsEnabled = true;
   bool _autoUpdate = false;
   String _selectedLanguage = 'O\'zbek';
 
   @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
+    );
+    _animationController!.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
-        _buildSectionTitle('Umumiy'),
-        _buildLanguageSetting(),
-        _buildThemeSetting(),
-        _buildNotificationSetting(),
-        _buildAutoUpdateSetting(),
+    if (_fadeAnimation == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFFFF6B35)),
+      );
+    }
 
-        const SizedBox(height: 20),
-        _buildSectionTitle('Crosshair'),
-        _buildCrosshairSettings(),
+    return FadeTransition(
+      opacity: _fadeAnimation!,
+      child: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          _buildSectionTitle('Umumiy'),
+          _buildLanguageSetting(),
+          _buildThemeSetting(),
+          _buildNotificationSetting(),
+          _buildAutoUpdateSetting(),
 
-        const SizedBox(height: 20),
-        _buildSectionTitle('Config'),
-        _buildConfigSettings(),
+          const SizedBox(height: 20),
+          _buildSectionTitle('Crosshair'),
+          _buildCrosshairSettings(),
 
-        const SizedBox(height: 20),
-        _buildSectionTitle('Ilova haqida'),
-        _buildAboutSettings(),
-      ],
+          const SizedBox(height: 20),
+          _buildSectionTitle('Config'),
+          _buildConfigSettings(),
+
+          const SizedBox(height: 20),
+          _buildSectionTitle('Ilova haqida'),
+          _buildAboutSettings(),
+        ],
+      ),
     );
   }
 
