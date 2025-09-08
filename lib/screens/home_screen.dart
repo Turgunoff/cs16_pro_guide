@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_text_styles.dart';
 import '../widgets/console_codes_content.dart';
 import '../widgets/home_content.dart';
 import '../widgets/maps_content.dart';
@@ -50,19 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _titles[_selectedIndex],
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        backgroundColor: const Color(0xFF2C3E50),
+        title: Text(_titles[_selectedIndex], style: AppTextStyles.appBarTitle),
+        backgroundColor: AppColors.secondary,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
         centerTitle: true,
       ),
+
       drawer: _buildDrawer(context),
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
@@ -105,22 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'CS 1.6',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const Text(
-                    'PRO GUIDE',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
-                      letterSpacing: 2,
-                    ),
-                  ),
+                  Text('CS 1.6', style: AppTextStyles.cs16Title),
+                  Text('PRO GUIDE', style: AppTextStyles.cs16Subtitle),
                 ],
               ),
             ),
@@ -242,17 +224,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: Text(
           title,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.white70,
-            fontSize: 16,
+          style: AppTextStyles.menuItem.copyWith(
+            color: isSelected ? AppColors.textPrimary : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(
-            color: isSelected ? Colors.white70 : Colors.white54,
-            fontSize: 12,
+          style: AppTextStyles.menuSubtitle.copyWith(
+            color: isSelected
+                ? AppColors.textSecondary
+                : AppColors.textTertiary,
           ),
         ),
         onTap: () {

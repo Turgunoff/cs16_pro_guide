@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'screens/splash_screen.dart';
+import 'theme/app_theme.dart';
+import 'utils/constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +11,7 @@ Future<void> main() async {
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('uz'), Locale('en'), Locale('ru')],
-      path: 'assets/translations',
+      path: AppConstants.assetsTranslationsPath,
       fallbackLocale: const Locale('uz'),
       startLocale: const Locale('uz'),
       child: const CS16ProGuideApp(),
@@ -23,17 +25,12 @@ class CS16ProGuideApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'app_name'.tr(),
+      title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: const Color(0xFFFF6B35),
-        scaffoldBackgroundColor: const Color(0xFF1A1A1A),
-        appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF2C3E50)),
-      ),
+      theme: AppTheme.darkTheme,
       home: const SplashScreen(),
     );
   }
