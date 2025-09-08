@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TournamentsScreen extends StatefulWidget {
-  const TournamentsScreen({super.key});
+class TournamentsContent extends StatefulWidget {
+  const TournamentsContent({super.key});
 
   @override
-  State<TournamentsScreen> createState() => _TournamentsScreenState();
+  State<TournamentsContent> createState() => _TournamentsContentState();
 }
 
-class _TournamentsScreenState extends State<TournamentsScreen> {
+class _TournamentsContentState extends State<TournamentsContent> {
   final List<Map<String, dynamic>> _tournaments = [
     {
       'name': 'CPL World Tour 2005',
@@ -84,35 +84,19 @@ class _TournamentsScreenState extends State<TournamentsScreen> {
   Widget build(BuildContext context) {
     final filteredTournaments = _getFilteredTournaments();
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        title: const Text(
-          'TURNIRLAR',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+    return Column(
+      children: [
+        _buildSearchAndFilter(),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: filteredTournaments.length,
+            itemBuilder: (context, index) {
+              return _buildTournamentCard(filteredTournaments[index]);
+            },
           ),
         ),
-        backgroundColor: const Color(0xFF2C3E50),
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          _buildSearchAndFilter(),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: filteredTournaments.length,
-              itemBuilder: (context, index) {
-                return _buildTournamentCard(filteredTournaments[index]);
-              },
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 

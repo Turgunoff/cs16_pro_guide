@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MapsScreen extends StatefulWidget {
-  const MapsScreen({super.key});
+class MapsContent extends StatefulWidget {
+  const MapsContent({super.key});
 
   @override
-  State<MapsScreen> createState() => _MapsScreenState();
+  State<MapsContent> createState() => _MapsContentState();
 }
 
-class _MapsScreenState extends State<MapsScreen> {
+class _MapsContentState extends State<MapsContent> {
   final List<Map<String, dynamic>> _maps = [
     {
       'name': 'de_dust2',
@@ -55,57 +55,41 @@ class _MapsScreenState extends State<MapsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        title: const Text(
-          'XARITALAR',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Counter-Strike 1.6 xaritalari',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        backgroundColor: const Color(0xFF2C3E50),
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Counter-Strike 1.6 xaritalari',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+          const SizedBox(height: 8),
+          const Text(
+            'Wallbang joylari, smoke pozitsiyalari va strategiyalar',
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
               ),
+              itemCount: _maps.length,
+              itemBuilder: (context, index) {
+                final map = _maps[index];
+                return _buildMapCard(map);
+              },
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Wallbang joylari, smoke pozitsiyalari va strategiyalar',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: _maps.length,
-                itemBuilder: (context, index) {
-                  final map = _maps[index];
-                  return _buildMapCard(map);
-                },
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

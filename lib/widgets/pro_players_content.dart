@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProPlayersScreen extends StatefulWidget {
-  const ProPlayersScreen({super.key});
+class ProPlayersContent extends StatefulWidget {
+  const ProPlayersContent({super.key});
 
   @override
-  State<ProPlayersScreen> createState() => _ProPlayersScreenState();
+  State<ProPlayersContent> createState() => _ProPlayersContentState();
 }
 
-class _ProPlayersScreenState extends State<ProPlayersScreen> {
+class _ProPlayersContentState extends State<ProPlayersContent> {
   final List<Map<String, dynamic>> _players = [
     {
       'name': 'f0rest',
@@ -72,35 +72,19 @@ class _ProPlayersScreenState extends State<ProPlayersScreen> {
   Widget build(BuildContext context) {
     final filteredPlayers = _getFilteredPlayers();
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        title: const Text(
-          'PRO O\'YINCHILAR',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+    return Column(
+      children: [
+        _buildSearchAndFilter(),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: filteredPlayers.length,
+            itemBuilder: (context, index) {
+              return _buildPlayerCard(filteredPlayers[index]);
+            },
           ),
         ),
-        backgroundColor: const Color(0xFF2C3E50),
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          _buildSearchAndFilter(),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: filteredPlayers.length,
-              itemBuilder: (context, index) {
-                return _buildPlayerCard(filteredPlayers[index]);
-              },
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class SettingsContent extends StatefulWidget {
+  const SettingsContent({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<SettingsContent> createState() => _SettingsContentState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsContentState extends State<SettingsContent> {
   bool _isDarkTheme = true;
   bool _notificationsEnabled = true;
   bool _autoUpdate = false;
@@ -15,43 +15,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1A1A1A),
-      appBar: AppBar(
-        title: const Text(
-          'SOZLAMALAR',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        backgroundColor: const Color(0xFF2C3E50),
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          _buildSectionTitle('Umumiy'),
-          _buildLanguageSetting(),
-          _buildThemeSetting(),
-          _buildNotificationSetting(),
-          _buildAutoUpdateSetting(),
+    return ListView(
+      padding: const EdgeInsets.all(16.0),
+      children: [
+        _buildSectionTitle('Umumiy'),
+        _buildLanguageSetting(),
+        _buildThemeSetting(),
+        _buildNotificationSetting(),
+        _buildAutoUpdateSetting(),
 
-          const SizedBox(height: 20),
-          _buildSectionTitle('Crosshair'),
-          _buildCrosshairSettings(),
+        const SizedBox(height: 20),
+        _buildSectionTitle('Crosshair'),
+        _buildCrosshairSettings(),
 
-          const SizedBox(height: 20),
-          _buildSectionTitle('Config'),
-          _buildConfigSettings(),
+        const SizedBox(height: 20),
+        _buildSectionTitle('Config'),
+        _buildConfigSettings(),
 
-          const SizedBox(height: 20),
-          _buildSectionTitle('Ilova haqida'),
-          _buildAboutSettings(),
-        ],
-      ),
+        const SizedBox(height: 20),
+        _buildSectionTitle('Ilova haqida'),
+        _buildAboutSettings(),
+      ],
     );
   }
 

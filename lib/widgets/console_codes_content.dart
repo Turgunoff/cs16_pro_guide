@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ConsoleCodesScreen extends StatelessWidget {
-  const ConsoleCodesScreen({super.key});
+class ConsoleCodesContent extends StatelessWidget {
+  const ConsoleCodesContent({super.key});
 
   @override
   Widget build(BuildContext context) {
