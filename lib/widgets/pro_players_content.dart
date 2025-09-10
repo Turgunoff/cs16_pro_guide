@@ -19,7 +19,7 @@ class _ProPlayersContentState extends State<ProPlayersContent>
       'team': 'SK Gaming',
       'position': 'Rifler',
       'achievements': ['WCG 2006 Champion', 'CPL 2005 World Tour'],
-      'photo': 'assets/images/players/forest.jpg',
+      'photo': 'assets/images/maps/nuke.png',
     },
     {
       'name': 'neo',
@@ -389,11 +389,20 @@ class _ProPlayersContentState extends State<ProPlayersContent>
               CircleAvatar(
                 radius: 30,
                 backgroundColor: const Color(0xFFFF6B35).withOpacity(0.2),
-                child: const Icon(
-                  Icons.person,
-                  color: Color(0xFFFF6B35),
-                  size: 30,
-                ),
+                backgroundImage:
+                    player['photo'] != null && player['photo'].isNotEmpty
+                    ? AssetImage(player['photo'])
+                    : null,
+                onBackgroundImageError: (exception, stackTrace) {
+                  // Handle image loading error - fallback to icon
+                },
+                child: player['photo'] == null || player['photo'].isEmpty
+                    ? const Icon(
+                        Icons.person,
+                        color: Color(0xFFFF6B35),
+                        size: 30,
+                      )
+                    : null,
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -500,138 +509,247 @@ class _ProPlayersContentState extends State<ProPlayersContent>
   }
 
   void _showPlayerDetails(Map<String, dynamic> player) {
-    showModalBottomSheet(
+    showDialog(
       context: context,
-      backgroundColor: const Color(0xFF2C3E50),
-      isScrollControlled: true,
-      builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.7,
-        maxChildSize: 0.9,
-        minChildSize: 0.5,
-        builder: (context, scrollController) => SingleChildScrollView(
-          controller: scrollController,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF2C3E50),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Center(
-                  child: Container(
-                    width: 4,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(2),
+                // Katta player rasmi yuqorida
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        const Color(0xFFFF6B35).withOpacity(0.1),
+                        const Color(0xFF2C3E50),
+                      ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: const Color(0xFFFF6B35).withOpacity(0.2),
-                      child: const Icon(
-                        Icons.person,
-                        color: Color(0xFFFF6B35),
-                        size: 40,
+                  child: Stack(
+                    children: [
+                      // Player rasmi
+                      Center(
+                        child: Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color(0xFFFF6B35),
+                              width: 4,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFFFF6B35).withOpacity(0.3),
+                                blurRadius: 20,
+                                spreadRadius: 5,
+                              ),
+                            ],
+                          ),
+                          child: ClipOval(
+                            child:
+                                player['photo'] != null &&
+                                    player['photo'].isNotEmpty
+                                ? Image.asset(
+                                    player['photo'],
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        color: const Color(
+                                          0xFFFF6B35,
+                                        ).withOpacity(0.2),
+                                        child: const Icon(
+                                          Icons.person,
+                                          color: Color(0xFFFF6B35),
+                                          size: 80,
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Container(
+                                    color: const Color(
+                                      0xFFFF6B35,
+                                    ).withOpacity(0.2),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Color(0xFFFF6B35),
+                                      size: 80,
+                                    ),
+                                  ),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            player['name'],
-                            style: const TextStyle(
+                      // Yopish tugmasi
+                      Positioned(
+                        top: 16,
+                        right: 16,
+                        child: GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.close,
                               color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              size: 20,
                             ),
                           ),
-                          Text(
-                            player['realName'],
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                _buildDetailSection('Mamlakat', player['country'], Icons.flag),
-                _buildDetailSection('Jamoa', player['team'], Icons.group),
-                _buildDetailSection(
-                  'Pozitsiya',
-                  player['position'],
-                  Icons.sports_esports,
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Yutuqlar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    ],
                   ),
                 ),
-                const SizedBox(height: 12),
-                ...player['achievements']
-                    .map<Widget>(
-                      (achievement) => Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Row(
+
+                // Player ma'lumotlari
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Ism va to'liq ism
+                      Center(
+                        child: Column(
                           children: [
-                            const Icon(
-                              Icons.emoji_events,
-                              color: Colors.amber,
-                              size: 16,
+                            Text(
+                              player['name'],
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                achievement,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
+                            const SizedBox(height: 8),
+                            Text(
+                              player['realName'],
+                              style: const TextStyle(
+                                color: Color(0xFFFF6B35),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Asosiy ma'lumotlar
+                      _buildInfoCard(
+                        'Mamlakat',
+                        player['country'],
+                        Icons.flag,
+                        const Color(0xFF4CAF50),
+                      ),
+                      _buildInfoCard(
+                        'Jamoa',
+                        player['team'],
+                        Icons.group,
+                        const Color(0xFF2196F3),
+                      ),
+                      _buildInfoCard(
+                        'Pozitsiya',
+                        player['position'],
+                        Icons.sports_esports,
+                        const Color(0xFFFF9800),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Yutuqlar bo'limi
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: const Color(0xFFFF6B35).withOpacity(0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.emoji_events,
+                                  color: Colors.amber,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 8),
+                                const Text(
+                                  'Yutuqlar',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            ...player['achievements'].map<Widget>(
+                              (achievement) => Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 6,
+                                      height: 6,
+                                      margin: const EdgeInsets.only(
+                                        top: 6,
+                                        right: 12,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFF6B35),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        achievement,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16,
+                                          height: 1.4,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    )
-                    .toList(),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '${player['name']} sozlamalari ochilmoqda...',
-                          ),
-                          backgroundColor: const Color(0xFFFF6B35),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF6B35),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: const Text(
-                      'Sozlamalarni ko\'rish',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ],
@@ -642,22 +760,55 @@ class _ProPlayersContentState extends State<ProPlayersContent>
     );
   }
 
-  Widget _buildDetailSection(String title, String value, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+  Widget _buildInfoCard(
+    String title,
+    String value,
+    IconData icon,
+    Color iconColor,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: iconColor.withOpacity(0.3), width: 1),
+      ),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFFFF6B35), size: 20),
-          const SizedBox(width: 12),
-          Text(
-            '$title: ',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: iconColor, size: 20),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(value, style: const TextStyle(color: Colors.grey, fontSize: 16)),
         ],
       ),
     );

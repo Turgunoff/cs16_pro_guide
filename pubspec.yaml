@@ -27,6 +27,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/logo/
+    - assets/images/players/
     - assets/translations/
     - assets/fonts/
     - assets/images/maps/
