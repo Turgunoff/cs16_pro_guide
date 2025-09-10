@@ -17,7 +17,8 @@ class _MapsContentState extends State<MapsContent>
       'name': 'de_dust2',
       'displayName': 'Dust II',
       'image': 'assets/images/maps/dust2.png',
-      'description': 'Eng mashhur xarita',
+      'description':
+          'Dust II — cho‘l hududidagi ochiq va keng maydonlar, uzun yo‘llar va klassik A hamda B plantlari bilan mashhur.',
       'wallbangs': 12,
       'difficulty': 'Easy',
       'type': 'Bomb Defusal',
@@ -27,50 +28,55 @@ class _MapsContentState extends State<MapsContent>
       'name': 'de_inferno',
       'displayName': 'Inferno',
       'image': 'assets/images/maps/inferno.png',
-      'description': 'Tactic xarita',
+      'description':
+          'Inferno — italyan qishlog‘idagi tor ko‘chalar, “banana” yo‘li va markaziy cherkov atrofidagi janglar bilan ajralib turadi.',
       'wallbangs': 8,
       'difficulty': 'Medium',
       'type': 'Bomb Defusal',
       'color': Color(0xFFE74C3C),
     },
     {
-      'name': 'de_mirage',
-      'displayName': 'Mirage',
-      'image': 'assets/images/maps/mirage.png',
-      'description': 'Balanced xarita',
+      'name': 'cs_mansion',
+      'displayName': 'Mansion',
+      'image': 'assets/images/maps/mansion.png',
+      'description':
+          'Mansion — katta uy va uning atrofi, ko‘plab xonalar va yashirin burchaklarga ega bo‘lgan xarita.',
       'wallbangs': 10,
       'difficulty': 'Medium',
-      'type': 'Bomb Defusal',
+      'type': 'Hostage Rescue',
       'color': Color(0xFF3498DB),
     },
     {
       'name': 'de_train',
       'displayName': 'Train',
       'image': 'assets/images/maps/train.png',
-      'description': 'CT sided xarita',
+      'description':
+          'Train — temiryo‘l stansiyasi, ko‘plab vagonlar va platformalar, tez harakat va yuqori aniqlik talab qilinadi.',
       'wallbangs': 6,
       'difficulty': 'Hard',
       'type': 'Bomb Defusal',
       'color': Color(0xFF9B59B6),
     },
     {
-      'name': 'de_cache',
-      'displayName': 'Cache',
-      'image': 'assets/images/maps/cache.png',
-      'description': 'Modern xarita',
-      'wallbangs': 9,
-      'difficulty': 'Medium',
-      'type': 'Bomb Defusal',
-      'color': Color(0xFF1ABC9C),
-    },
-    {
       'name': 'cs_office',
       'displayName': 'Office',
       'image': 'assets/images/maps/office.png',
-      'description': 'Hostage xarita',
-      'wallbangs': 5,
-      'difficulty': 'Easy',
+      'description':
+          'Office — zamonaviy ofis binosi, ko‘plab xonalar va koridorlar, garovga olinganlarni qutqarish uchun murakkab yo‘llar.',
+      'wallbangs': 7,
+      'difficulty': 'Medium',
       'type': 'Hostage Rescue',
+      'color': Color(0xFF1ABC9C),
+    },
+    {
+      'name': 'de_nuke',
+      'displayName': 'Nuke',
+      'image': 'assets/images/maps/nuke.png',
+      'description':
+          'Nuke — yadro elektr stansiyasi, ikki qavatli bomb plantlar va vertikal o‘yin imkoniyatlari bilan mashhur.',
+      'wallbangs': 5,
+      'difficulty': 'Hard',
+      'type': 'Bomb Defusal',
       'color': Color(0xFFF39C12),
     },
   ];
@@ -230,34 +236,38 @@ class _MapsContentState extends State<MapsContent>
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            (map['color'] as Color).withOpacity(0.8),
-            (map['color'] as Color).withOpacity(0.6),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.0, 0.5, 1.0],
+        image: DecorationImage(
+          image: AssetImage(map['image']), // Xarita rasmi
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.3), // Rasmni biroz qorong'ulashtirish
+            BlendMode.darken,
+          ),
         ),
       ),
-      child: Stack(
-        children: [
-          // Pattern overlay
-          Positioned.fill(
-            child: CustomPaint(
-              painter: PatternPainter(color: Colors.white.withOpacity(0.1)),
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              (map['color'] as Color).withOpacity(0.3),
+              (map['color'] as Color).withOpacity(0.2),
+              Colors.black.withOpacity(0.6),
+            ],
+            stops: const [0.0, 0.5, 1.0],
           ),
-          // Map icon
-          Center(
-            child: Icon(
-              Icons.map,
-              size: 60,
-              color: Colors.white.withOpacity(0.3),
+        ),
+        child: Stack(
+          children: [
+            // Pattern overlay (ixtiyoriy)
+            Positioned.fill(
+              child: CustomPaint(
+                painter: PatternPainter(color: Colors.white.withOpacity(0.05)),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

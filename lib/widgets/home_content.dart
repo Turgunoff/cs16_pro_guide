@@ -10,10 +10,7 @@ class HomeContent extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF1A1A1A),
-            Color(0xFF2C3E50),
-          ],
+          colors: [Color(0xFF1A1A1A), Color(0xFF2C3E50)],
         ),
       ),
       child: SafeArea(
@@ -33,14 +30,11 @@ class HomeContent extends StatelessWidget {
               const SizedBox(height: 8),
               const Text(
                 'CS 1.6 da g\'alaba qozonishga tayyormisiz?',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
               ),
-              
+
               const SizedBox(height: 30),
-              
+
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -63,12 +57,6 @@ class HomeContent extends StatelessWidget {
                       'Pro Players',
                       Icons.people,
                       '25+ legends',
-                      () {},
-                    ),
-                    _buildQuickAccessCard(
-                      'Tournaments',
-                      Icons.emoji_events,
-                      '20+ majors',
                       () {},
                     ),
                   ],
@@ -110,11 +98,7 @@ class HomeContent extends StatelessWidget {
                   color: const Color(0xFFFF6B35).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(
-                  icon,
-                  color: const Color(0xFFFF6B35),
-                  size: 24,
-                ),
+                child: Icon(icon, color: const Color(0xFFFF6B35), size: 24),
               ),
               const SizedBox(height: 12),
               Text(
@@ -129,10 +113,7 @@ class HomeContent extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 subtitle,
-                style: const TextStyle(
-                  color: Colors.white54,
-                  fontSize: 12,
-                ),
+                style: const TextStyle(color: Colors.white54, fontSize: 12),
                 textAlign: TextAlign.center,
               ),
             ],

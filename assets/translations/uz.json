@@ -9,7 +9,6 @@
   "maps": "Xaritalar",
   "settings": "Sozlamalar",
   "pro_players": "Pro o'yinchilar",
-  "tournaments": "Turnirlar",
   "about_app": "Ilova haqida",
   "rate_us": "Baholang",
   "change_language": "Tilni o'zgartirish",
@@ -17,5 +16,7 @@
   "ready_to_dominate": "CS 1.6 da g'alaba qozonishga tayyormisiz?",
   "close": "Yopish",
   "home": "Asosiy",
-  "main_page": "Bosh sahifa"
+  "main_page": "Bosh sahifa",
+  "welcome_to_cs16_pro_guide": "CS 1.6 Pro Qo'llanma botiga xush kelibsiz!",
+  "welcome_message": "CS 1.6 o'yinchilari uchun offline mobil qo'llanma"
 }

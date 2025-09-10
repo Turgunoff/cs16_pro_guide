@@ -11,8 +11,6 @@ class _SettingsContentState extends State<SettingsContent>
     with TickerProviderStateMixin {
   AnimationController? _animationController;
   Animation<double>? _fadeAnimation;
-  bool _isDarkTheme = true;
-  bool _notificationsEnabled = true;
   bool _autoUpdate = false;
   String _selectedLanguage = 'O\'zbek';
 
@@ -50,17 +48,7 @@ class _SettingsContentState extends State<SettingsContent>
         children: [
           _buildSectionTitle('Umumiy'),
           _buildLanguageSetting(),
-          _buildThemeSetting(),
-          _buildNotificationSetting(),
           _buildAutoUpdateSetting(),
-
-          const SizedBox(height: 20),
-          _buildSectionTitle('Crosshair'),
-          _buildCrosshairSettings(),
-
-          const SizedBox(height: 20),
-          _buildSectionTitle('Config'),
-          _buildConfigSettings(),
 
           const SizedBox(height: 20),
           _buildSectionTitle('Ilova haqida'),
@@ -95,34 +83,6 @@ class _SettingsContentState extends State<SettingsContent>
     );
   }
 
-  Widget _buildThemeSetting() {
-    return _buildSwitchTile(
-      icon: Icons.dark_mode,
-      title: 'Dark Theme',
-      subtitle: 'Qorong\'u mavzu',
-      value: _isDarkTheme,
-      onChanged: (value) {
-        setState(() {
-          _isDarkTheme = value;
-        });
-      },
-    );
-  }
-
-  Widget _buildNotificationSetting() {
-    return _buildSwitchTile(
-      icon: Icons.notifications,
-      title: 'Bildirishnomalar',
-      subtitle: 'Yangiliklar haqida xabar berish',
-      value: _notificationsEnabled,
-      onChanged: (value) {
-        setState(() {
-          _notificationsEnabled = value;
-        });
-      },
-    );
-  }
-
   Widget _buildAutoUpdateSetting() {
     return _buildSwitchTile(
       icon: Icons.update,
@@ -134,85 +94,6 @@ class _SettingsContentState extends State<SettingsContent>
           _autoUpdate = value;
         });
       },
-    );
-  }
-
-  Widget _buildCrosshairSettings() {
-    return Column(
-      children: [
-        _buildSettingTile(
-          icon: Icons.crop_square_sharp,
-          title: 'Crosshair sozlamalari',
-          subtitle: 'Pro o\'yinchilar crosshair kodlari',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Crosshair sozlamalari ochilmoqda...'),
-                backgroundColor: Color(0xFFFF6B35),
-              ),
-            );
-          },
-        ),
-        _buildSettingTile(
-          icon: Icons.palette,
-          title: 'Crosshair ranglari',
-          subtitle: 'Rang tanlash va preview',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Crosshair ranglari ochilmoqda...'),
-                backgroundColor: Color(0xFFFF6B35),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildConfigSettings() {
-    return Column(
-      children: [
-        _buildSettingTile(
-          icon: Icons.settings,
-          title: 'FPS optimizatsiya',
-          subtitle: 'Maksimal FPS uchun sozlamalar',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('FPS sozlamalari ochilmoqda...'),
-                backgroundColor: Color(0xFFFF6B35),
-              ),
-            );
-          },
-        ),
-        _buildSettingTile(
-          icon: Icons.code,
-          title: 'Config generator',
-          subtitle: 'Shaxsiy config yaratish',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Config generator ochilmoqda...'),
-                backgroundColor: Color(0xFFFF6B35),
-              ),
-            );
-          },
-        ),
-        _buildSettingTile(
-          icon: Icons.download,
-          title: 'Pro configs',
-          subtitle: 'Mashhur o\'yinchilar configlari',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Pro configs ochilmoqda...'),
-                backgroundColor: Color(0xFFFF6B35),
-              ),
-            );
-          },
-        ),
-      ],
     );
   }
 
@@ -314,7 +195,7 @@ class _SettingsContentState extends State<SettingsContent>
         ),
         value: value,
         onChanged: onChanged,
-        activeColor: const Color(0xFFFF6B35),
+        activeThumbColor: const Color(0xFFFF6B35),
       ),
     );
   }

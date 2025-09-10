@@ -8,12 +8,10 @@ import '../widgets/home_content.dart';
 import '../widgets/maps_content.dart';
 import '../widgets/pro_players_content.dart';
 import '../widgets/settings_content.dart';
-import '../widgets/tournaments_content.dart';
 // import '../widgets/console_codes_content.dart';
 // import '../widgets/maps_content.dart';
 // import '../widgets/settings_content.dart';
 // import '../widgets/pro_players_content.dart';
-// import '../widgets/tournaments_content.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
     'Xaritalar',
     'Sozlamalar',
     'Pro o\'yinchilar',
-    'Turnirlar',
   ];
 
   late final List<Widget> _screens;
@@ -45,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
       const MapsContent(),
       const SettingsContent(),
       const ProPlayersContent(),
-      const TournamentsContent(),
     ];
   }
 
@@ -84,47 +80,66 @@ class _HomeScreenState extends State<HomeScreen> {
                 colors: AppColors.primaryGradient,
               ),
               boxShadow: [AppTheme.subtleGlow],
+              image: const DecorationImage(
+                image: AssetImage(
+                  'assets/images/cs16_background.png',
+                ), // Rasmingizning yo'li
+                fit: BoxFit.cover,
+                opacity: 0.3, // Rasmni biroz shaffof qilish
+              ),
             ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Compact logo
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteOpacity20,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.whiteOpacity30,
-                          width: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColors.backgroundPrimary.withOpacity(0.7),
+                    AppColors.primary.withOpacity(0.8),
+                  ],
+                ),
+              ),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Compact logo
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: AppColors.whiteOpacity20,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppColors.whiteOpacity30,
+                            width: 1,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.sports_esports,
+                          size: 28,
+                          color: Colors.white,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.sports_esports,
-                        size: 28,
-                        color: Colors.white,
+                      const SizedBox(height: 8),
+                      Text(
+                        'CS 1.6 PRO',
+                        style: AppTextStyles.displaySmall.copyWith(
+                          fontSize: 18,
+                          letterSpacing: 1.5,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'CS 1.6 PRO',
-                      style: AppTextStyles.displaySmall.copyWith(
-                        fontSize: 18,
-                        letterSpacing: 1.5,
+                      Text(
+                        'GUIDE',
+                        style: AppTextStyles.cs16Subtitle.copyWith(
+                          fontSize: 10,
+                          letterSpacing: 2.0,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'GUIDE',
-                      style: AppTextStyles.cs16Subtitle.copyWith(
-                        fontSize: 10,
-                        letterSpacing: 2.0,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -164,12 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icons.people_rounded,
                   title: 'pro_players'.tr(),
                   index: 4,
-                ),
-                _buildCompactDrawerItem(
-                  context,
-                  icon: Icons.emoji_events_rounded,
-                  title: 'tournaments'.tr(),
-                  index: 5,
                 ),
 
                 // Divider with style

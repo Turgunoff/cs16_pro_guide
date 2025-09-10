@@ -1,5 +1,9 @@
 # .gitignore faylini qayta yarating (siz yuborgan kontent bilan)
-echo "# Miscellaneous
+echo "android/" >> .gitignore
+echo "ios/" >> .gitignore
+echo ".metadata" >> .gitignore
+echo "pubspec.lock" >> .gitignore
+
 *.class
 *.log
 *.pyc
